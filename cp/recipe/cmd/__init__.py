@@ -15,7 +15,7 @@
 # along with this program; see the file COPYING. If not, write to the
 # Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 """Recipe cmd"""
-import commands
+import subprocess
 import tempfile
 import shutil
 import os, sys
@@ -64,11 +64,11 @@ class Cmd(object):
 			fil.write('\n'.join(lines))
 			fil.close()
 			#give execute permissions
-			os.chmod(tmpfile,0700)
-			status, results = commands.getstatusoutput(tmpfile)
-			print results
+			os.chmod(tmpfile,0o700)
+			status, results = subprocess.getstatusoutput(tmpfile)
+			print(results)
 			if status:
-				raise CmdExecutionFailed,results
+				raise CmdExecutionFailed(results)
 			return status
 
 
@@ -96,7 +96,7 @@ class Python(Cmd):
 			dirname = tempfile.mkdtemp()
 			tmpfile = os.path.join(dirname, 'run.py')
 			open(tmpfile, 'w').write('\n'.join(lines))
-			execfile(tmpfile)
+			exec(compile(open(tmpfile).read(), tmpfile, 'exec'))
 			shutil.rmtree(dirname)
 
 
