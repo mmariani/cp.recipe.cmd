@@ -65,10 +65,17 @@ class Cmd(object):
 			fil.close()
 			#give execute permissions
 			os.chmod(tmpfile,0o700)
-			status, results = subprocess.getstatusoutput(tmpfile)
-			print(results)
+			process = subprocess.Popen([tmpfile], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0)
+			while True:
+				line = process.stdout.readline()
+				if not line:
+					break
+				sys.stdout.write(line)
+				sys.stdout.flush()
+			process.wait()
+			status = process.returncode
 			if status:
-				raise CmdExecutionFailed(results)
+				raise CmdExecutionFailed('while running %s, see the output above.' % tmpfile)
 			return status
 
 
