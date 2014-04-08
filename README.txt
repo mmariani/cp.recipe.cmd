@@ -43,15 +43,15 @@ update_cmd = ${commandexample:install_cmd}
 
 
 I've added a new option shell=
-You can put whateer you want in there, sme nice examples:
+You can put whatever you want in there, some nice examples:
 /usr/bin/env python
 (to run the python interpreter)
 the default is /bin/sh, so all your old code using this will work just fine.
 
-Also, I check the output of the script and if something returns >0 then
-CmdExecutionFailed is raised, along with the output of the error, and the path
-of where the script is, so you can see what was generated, do debugging, and
-fix it.
+Both the stdout and stderr of the script are displayed in realtime, while it is running.
+
+If the script returns a status code >0, then an exception (CmdExecutionFailed) is raised
+with the location of the script, so you can deubg and fix it.
 
 
 a python example using the new shell= is here:
