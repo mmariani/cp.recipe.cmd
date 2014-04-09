@@ -26,7 +26,6 @@ import unittest
 import doctest
 import sys
 import os
-from os.path import join
 
 from zope.testing import doctest, renormalizing
 
