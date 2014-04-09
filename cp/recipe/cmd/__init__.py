@@ -30,20 +30,20 @@ class Cmd(object):
 
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
-        self.on_install = options.get('on-install', True)
-        self.on_update = options.get('on-update', True)
+        self.on_install = options.get('on-install', options.get('on_install', True))
+        self.on_update = options.get('on-update', options.get('on_update', True))
         self.shell = options.get('shell','/bin/sh')
 
     def install(self):
         """installer"""
-        cmds = self.options.get('install-cmd', '')
+        cmds = self.options.get('install-cmd', self.options.get('install_cmd', ''))
         if self.on_install:
             self.execute(cmds)
         return tuple()
 
     def update(self):
         """updater"""
-        cmds = self.options.get('update-cmd', '')
+        cmds = self.options.get('update-cmd', self.options.get('update_cmd', ''))
         if self.on_update:
             self.execute(cmds)
         return tuple()
