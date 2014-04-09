@@ -95,9 +95,6 @@ class Python(Cmd):
 		if not cmds:
 			return
 		if cmds:
-			name = self.name
-			buildout = self.buildout
-			options = self.options
 			lines = cmds.split('\n')
 			lines = [undoc(line) for line in lines if line.strip()]
 			dirname = tempfile.mkdtemp()
